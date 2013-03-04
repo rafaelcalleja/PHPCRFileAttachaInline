@@ -8,6 +8,6 @@ class DefaultController extends Controller
 {
     public function indexAction($name)
     {
-        return $this->render('FileAttachInlineBundle:Default:index.html.twig', array('name' => $name));
+        return $this->render('RCPHPCRFileAttachInlineBundle:Default:index.html.twig', array('name' => $name));
     }
 }
