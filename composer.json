@@ -1,8 +1,8 @@
 {
-    "name": "rc/phpcr-file-attach-inline-bundle",
+    "name": "rc/phpcr-fai-bundle",
     "type": "symfony-bundle",
     "description": "Download automatic inline file's documents",
-    "keywords": ["dowload", "pdf", "inline", "attach", "bundle"],
+    "keywords": ["dowload", "pdf", "inline", "attach", "PHPCR", "bundle"],
     "homepage": "https://github.com/rafaelcalleja/PHPCRFileAttachaInline",
     "license": "MIT",
     "authors": [
@@ -14,9 +14,6 @@
     "require": {
         "php": ">=5.3.2",
 	"jackalope/jackalope-doctrine-dbal": "dev-master",
-	"symfony/finder":           ">=2.0.16,<2.3-dev",
-        "symfony/filesystem":       ">=2.0.16,<2.3-dev",
-        "symfony/framework-bundle": ">=2.0.16,<2.3-dev"
     },
     "require-dev": {
         "symfony/framework-bundle": ">=2.1,<2.2-dev"
@@ -25,5 +22,5 @@
         "psr-0": { "RC\\FileAttachInlineBundle": "" }
     },
     "minimum-stability": "dev",
-    "target-dir": "RC/phphcr/faibundle"
+    "target-dir": "RC/FileAttachInlineBundle"
 }
