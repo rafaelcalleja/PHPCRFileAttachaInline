@@ -1,5 +1,5 @@
 {
-    "name": "rc/phphcr-file-attahc-inline-bundle",
+    "name": "rc/phpcr-file-attahc-inline-bundle",
     "type": "symfony-bundle",
     "description": "Download automatic inline file's documents",
     "keywords": ["dowload", "pdf", "inline", "attach", "bundle"],
