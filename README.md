@@ -69,14 +69,14 @@ rcphpcr_file_attach_inline:
 
 ## Apache Rewrite rule
 run:
-...
+``` php
 app/console rc:apache:dump
-...
+```
 
 paste result like your first rule in web/.htaccess
 
 example:
-...
+```
 # web/.htacess
 <IfModule mod_rewrite.c>
     RewriteEngine On
@@ -89,4 +89,4 @@ example:
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(.*)$ app.php [QSA,L]
 </IfModule>
-...
+```
