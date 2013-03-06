@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="rc.phpcr.render.inline.class">RC\PHPCR\FileAttachInlineBundle\Utils\renderInline</parameter>
+        <parameter key="rc.phpcr.file.validator.class">RC\PHPCR\FileAttachInlineBundle\Validator\filevalidator</parameter>
+        <parameter key="rc_phpcr.controller.class">RC\PHPCR\FileAttachInlineBundle\Controller\DefaultController</parameter>
+        <parameter key="rc.phpcr.resolver.class">RC\PHPCR\FileAttachInlineBundle\Resolver\Preferencer</parameter>
+        <parameter key="rc.phpcr.phpcr.provider.class">RC\PHPCR\FileAttachInlineBundle\Resolver\Providers\PhpcrProvider</parameter>
+        <parameter key="rc.phpcr.filesystem.provider.class">RC\PHPCR\FileAttachInlineBundle\Resolver\Providers\FilesystemProvider</parameter>
+        
+        <!-- Route loader class -->
+        <parameter key="rc.phpcr.routing.loader.class">RC\PHPCR\FileAttachInlineBundle\Routing\RcfiaLoader</parameter>
+        
+        
+        <parameter key="rc.phpcr.file.validator.options" type="collection">
+    		<parameter key="maxSize">%rcphpcr_file_attach_inline.max_filesize%</parameter>
+        	<parameter key="mimeTypes">%rcphpcr_file_attach_inline.mimetypes%</parameter>
+    	</parameter>
+    
+    </parameters>
+    
+
+    <services>
+        <service id="rc.phpcr.render.inline" class="%rc.phpcr.render.inline.class%"></service>
+        <service id="rc.phpcr.file.validator" class="%rc.phpcr.file.validator.class%">
+          <argument type="service" id="service_container" />
+          <argument>%rc.phpcr.file.validator.options%</argument>
+          <argument>%rcphpcr_file_attach_inline.mimetypes%</argument>
+        </service>
+        
+        <service id="rc.phpcr.resolver.service" class="%rc.phpcr.resolver.class%">
+        	<argument>%rcphpcr_file_attach_inline.preference%</argument>
+        	<argument type="service" id="service_container" />
+        </service>
+        
+        <service id="rc.phpcr.phpcr.provider" class="%rc.phpcr.phpcr.provider.class%">
+        	<argument>%rcphpcr_file_attach_inline.providers.phpcr%</argument>
+        	<argument type="service" id="doctrine_phpcr.odm.document_manager"></argument>
+        	<argument type="service" id="lunetics_locale.guesser_manager"></argument>
+        	<argument type="service" id="service_container"></argument>
+        </service>
+        <service id="rc.phpcr.filesystem.provider" class="%rc.phpcr.filesystem.provider.class%"></service>
+        
+        <!-- Route Loader -->
+
+        <service id="rc.phpcr.routing.loader" class="%rc.phpcr.routing.loader.class%">
+            <tag name="routing.loader" />
+            <argument>%rc_phpcr.controller.class%</argument>
+            <argument>%rcphpcr_file_attach_inline.controller_action%</argument>
+            <argument>%rcphpcr_file_attach_inline.extensions%</argument>
+        </service>
+        <service id="rc_phpcr.controller" class="%rc_phpcr.controller.class%">
+        	<argument type="service" id="service_container" />
+        </service>
+        
+        
+        
+        
+    </services>
+</container>

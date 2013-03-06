@@ -1,3 +1,3 @@
 rcphpcr_file_attach_inline_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: RCPHPCRFileAttachInlineBundle:Default:index }
+    pattern:  /test/{name}
+    defaults: { _controller: RCPHPCRFileAttachInlineBundle:Default:find }

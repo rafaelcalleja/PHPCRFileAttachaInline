@@ -1,7 +1,0 @@
-parameters:
-#    rcphpcr_file_attach_inline.example.class: RC\PHPCR\FileAttachInlineBundle\Example
-
-services:
-#    rcphpcr_file_attach_inline.example:
-#        class: %rcphpcr_file_attach_inline.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
