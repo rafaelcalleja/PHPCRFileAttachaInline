@@ -6,9 +6,9 @@ PHPCRFileAttachaInline
 
 ## Step 1: Installation
 
-...
+```
 php composer.phar install rc/phpcr-fai-bundle
-...
+```
 
 
 ## Step 2: Enable the bundle
