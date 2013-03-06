@@ -67,7 +67,7 @@ EOT
         $extensions = $this->getContainer()->getParameter('rcphpcr_file_attach_inline.extensions');
         $extensions = array_merge($extensions, array_map('strtoupper', $extensions));
         
-        $controller = str_replace("\\", '\\\\', $this->getContainer()->getParameter('rc_phpcr.controller') );
+        $controller = str_replace("\\", '\\\\', $this->getContainer()->getParameter('rc_phpcr.controller.class') );
         $action = strstr($this->getContainer()->getParameter('rcphpcr_file_attach_inline.controller_action'), ':');
         
         $rules[] = str_replace('__extensions__', implode('|', $extensions), 'RewriteCond %{REQUEST_URI} ^/(.*\.(__extensions__))$');
