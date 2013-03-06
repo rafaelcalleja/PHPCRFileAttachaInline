@@ -13,7 +13,7 @@ php composer.phar install rc/phpcr-fai-bundle
 
 ## Step 2: Enable the bundle
 
-Finally, enable the bundle in the kernel:
+Enable the bundle in the kernel:
 
 ``` php
 <?php
@@ -31,7 +31,7 @@ public function registerBundles()
 
 ## Step 3: Register the bundle's routes
 
-add the following to your routing file:
+Add the following to your routing file:
 
 ``` yaml
 # app/config/routing.yml
