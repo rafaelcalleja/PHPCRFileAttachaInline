@@ -31,7 +31,8 @@ class PhpcrProvider implements FileNameInterface{
 			$info = pathinfo($filepath);
 			$extension = (isset($info['extension'])) ? '.'. $info['extension'] : '' ;
 			$results = $this->dm->createPhpcrQuery($sql, 'JCR-SQL2')->execute();
-			$title = $results->getRows()->current()->getValue($fieldtitle);
+			$row = $results->getRows();
+			$title = ($row) ? false : $row->current()->getValue($fieldtitle);
 			return (!empty($title)) ? $title.$extension : false;
 		}catch(Exception $e){
 			return false;
