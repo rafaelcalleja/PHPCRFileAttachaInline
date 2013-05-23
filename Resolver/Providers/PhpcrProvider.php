@@ -28,11 +28,18 @@ class PhpcrProvider implements FileNameInterface{
 
 			$fieldtitle = $this->getFieldTitle($this->localemanager->runLocaleGuessing($this->request));
 			$sql = "SELECT ".$fieldtitle." from [nt:unstructured] where ".$this->field." = '".basename($filepath)."'";
+			
 			$info = pathinfo($filepath);
 			$extension = (isset($info['extension'])) ? '.'. $info['extension'] : '' ;
 			$results = $this->dm->createPhpcrQuery($sql, 'JCR-SQL2')->execute();
 			$row = $results->getRows();
+			
 			$title = (count($row) > 0) ?  $row->current()->getValue($fieldtitle) : false;
+			if(!$title){
+				$parent = $this->dm->getPhpcrSession()->getNode(dirname($row->current()->getPath()));
+				$title = ($parent && $parent->hasProperty($fieldtitle) && $parent->getPropertyValue($fieldtitle) ) ? $parent->getPropertyValue($fieldtitle) : false;
+			}
+			
 			return (!empty($title)) ? $title.$extension : false;
 		}catch(Exception $e){
 			return false;

@@ -20,7 +20,7 @@ class filevalidator {
 	protected $defaults = array(
 				'maxSize' => '3072k',
 				'mimeTypes' => array('application/pdf', 'application/x-pdf', 'application/zip'),
-				'mimeTypesMessage' => 'Archivo invalido'			
+				'mimeTypesMessage' => "El Tipo de fichero ({{ type }}) no está permitido"			
 			);
 	
 	
