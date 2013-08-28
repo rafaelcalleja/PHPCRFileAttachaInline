@@ -12,6 +12,7 @@ use Symfony\Component\Validator\ExecutionContext;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\HttpFoundation\File\File as archivo;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class filevalidator {
 	
@@ -56,7 +57,7 @@ class filevalidator {
         
  
         foreach($registerData as $file){
-        	if(!$this->doValid( new archivo($file), $collectionConstraint)) return false;
+        	if(!$this->doValid( new archivo($file, false), $collectionConstraint)) return false;
         }
         return true;
         
@@ -65,7 +66,8 @@ class filevalidator {
     	
     	$errors = $this->container->get('validator')->validateValue(array('filevalidator'=> $file), $collectionConstraint);
     	if (count($errors) !== 0) {
-    		throw new HttpException(400, $errors[0]->getPropertyPath() . ':' . $this->container->get('translator')->trans($errors[0]->getMessage(), array(), 'validators'));
+    		//throw new HttpException(404, $errors[0]->getPropertyPath() . ':' . $this->container->get('translator')->trans($errors[0]->getMessage(), array(), 'validators'));
+            throw new NotFoundHttpException($errors[0]->getPropertyPath() . ':' . $this->container->get('translator')->trans($errors[0]->getMessage(), array(), 'validators'));
     		return false;
     	}
     	return true;
