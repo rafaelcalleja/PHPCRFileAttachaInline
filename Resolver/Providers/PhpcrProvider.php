@@ -35,7 +35,7 @@ class PhpcrProvider implements FileNameInterface{
 			$row = $results->getRows();
 			
 			$title = (count($row) > 0) ?  $row->current()->getValue($fieldtitle) : false;
-			if(!$title){
+			if(!$title && $row->valid()){
 				$parent = $this->dm->getPhpcrSession()->getNode(dirname($row->current()->getPath()));
 				$title = ($parent && $parent->hasProperty($fieldtitle) && $parent->getPropertyValue($fieldtitle) ) ? $parent->getPropertyValue($fieldtitle) : false;
 			}
