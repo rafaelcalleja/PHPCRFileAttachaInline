@@ -24,7 +24,9 @@
     
 
     <services>
-        <service id="rc.phpcr.render.inline" class="%rc.phpcr.render.inline.class%"></service>
+        <service id="rc.phpcr.render.inline" class="%rc.phpcr.render.inline.class%">
+            <argument type="service" id="event_dispatcher" />
+        </service>
         <service id="rc.phpcr.file.validator" class="%rc.phpcr.file.validator.class%">
           <argument type="service" id="service_container" />
           <argument>%rc.phpcr.file.validator.options%</argument>

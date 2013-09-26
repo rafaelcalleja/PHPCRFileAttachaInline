@@ -21,6 +21,7 @@ class DefaultController{
     	if($validator->validateFile( array($filename) )){
     		$resolver = $this->container->get('rc.phpcr.resolver.service');
     		$txtname = $resolver->getName($filename);
+
     		return $this->container->get('rc.phpcr.render.inline')->download($filename, $txtname );
     	}
     }
