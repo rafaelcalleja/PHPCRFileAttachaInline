@@ -48,6 +48,12 @@ class filevalidator {
             $filename = pathinfo($file, PATHINFO_BASENAME) ;
             $directory = dirname($file) ;
 
+            if(!file_exists($directory)){
+                // TODO
+                $directory = str_replace('publicaciones-notas-tecnicas/', '', $directory);
+
+            }
+
             $files = Finder::create()->in($directory)->name('/'.str_replace(' ', '.', $filename.'/'))->files();
 
             if( $files->count() == 1){
@@ -56,7 +62,7 @@ class filevalidator {
                     return $f->getPathname();
                 }
             }
-
+            
             return $file;
 
         }catch(\Exception $e){
