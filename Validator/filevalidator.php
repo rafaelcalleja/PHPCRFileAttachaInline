@@ -1,6 +1,7 @@
 <?php
 namespace RC\PHPCR\FileAttachInlineBundle\Validator;
  
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\MinLength;
 use Symfony\Component\Validator\Constraints\MaxLength;
@@ -20,6 +21,8 @@ use RC\PHPCR\FileAttachInlineBundle\Event\FileErrorEvent;
 class filevalidator {
 	
 	protected $container;
+
+    protected $filename;
 	
 	protected $defaults = array(
 				'maxSize' => '3072k',
@@ -37,6 +40,32 @@ class filevalidator {
 	private function setDefaults($values){
 		$this->defaults = array_merge($this->defaults, $values);
 	}
+
+    private function getRealPath($file){
+
+        $filename = pathinfo($file, PATHINFO_BASENAME) ;
+        $directory = dirname($file) ;
+
+        $files = Finder::create()->in($directory)->name('/'.str_replace(' ', '.', $filename.'/'))->files();
+
+        if( $files->count() == 1){
+            foreach($files as $f) {
+                $this->filename = $f->getPathname();
+                return $f->getPathname();
+            }
+        }
+
+        return $file;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
 	
    /**
      * Validates Register Data passed as an array to be reused
@@ -60,7 +89,8 @@ class filevalidator {
         
  
         foreach($registerData as $file){
-        	if(!$this->doValid( new archivo($file, false), $collectionConstraint)) return false;
+
+        	if(!$this->doValid( new archivo($this->getRealPath($file), false), $collectionConstraint)) return false;
         }
         return true;
         

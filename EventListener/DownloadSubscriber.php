@@ -47,7 +47,7 @@ class DownloadSubscriber implements EventSubscriberInterface {
     /* TODO Solamente se va realizar un unico redirect, refactorizar queueRedirect */
     public function postFailedValidation(FileErrorEvent $event){
 
-        $files = Finder::create()->in($this->web_root)->name($event->getFilename())->files();
+        $files = Finder::create()->in($this->web_root)->name('/'.str_replace(' ', '.', $event->getFilename().'/'))->files();
 
         if( $files->count() == 1){
 

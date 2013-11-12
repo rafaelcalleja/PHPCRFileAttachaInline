@@ -21,10 +21,12 @@ class DefaultController{
     public function FindAction($filename){
 
     	$pathinfo = $this->container->get('request')->getPathinfo();
-    	$filename = urldecode($this->container->getParameter('rcphpcr_file_attach_inline.web_root') . $pathinfo);
+    	$filename = $this->container->getParameter('rcphpcr_file_attach_inline.web_root') . $pathinfo;
     	$validator = $this->container->get('rc.phpcr.file.validator');
 
-    	if($validator->validateFile( array($filename) )){
+    	if($validator->validateFile( array(urldecode($filename)) )){
+            
+            $filename = $validator->getFilename();
     		$resolver = $this->container->get('rc.phpcr.resolver.service');
     		$txtname = $resolver->getName($filename);
 

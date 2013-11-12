@@ -11,8 +11,8 @@ class FileInfoEvent extends SymfonyEvent{
     protected $mimetype;
 
     public function __construct($filename, $filepath, $size, $mimetype){
-        $this->filename = urldecode($filename);
-        $this->filepath = urldecode($filepath);
+        $this->filename = rawurldecode($filename);
+        $this->filepath = rawurldecode($filepath);
         $this->size = $size;
         $this->mimetype = $mimetype;
     }
