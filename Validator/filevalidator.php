@@ -43,19 +43,25 @@ class filevalidator {
 
     private function getRealPath($file){
 
-        $filename = pathinfo($file, PATHINFO_BASENAME) ;
-        $directory = dirname($file) ;
+        try{
+            
+            $filename = pathinfo($file, PATHINFO_BASENAME) ;
+            $directory = dirname($file) ;
 
-        $files = Finder::create()->in($directory)->name('/'.str_replace(' ', '.', $filename.'/'))->files();
+            $files = Finder::create()->in($directory)->name('/'.str_replace(' ', '.', $filename.'/'))->files();
 
-        if( $files->count() == 1){
-            foreach($files as $f) {
-                $this->filename = $f->getPathname();
-                return $f->getPathname();
+            if( $files->count() == 1){
+                foreach($files as $f) {
+                    $this->filename = $f->getPathname();
+                    return $f->getPathname();
+                }
             }
-        }
 
-        return $file;
+            return $file;
+
+        }catch(Exception $e){
+            return $file;
+        }
     }
 
     /**

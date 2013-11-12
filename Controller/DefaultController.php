@@ -25,7 +25,7 @@ class DefaultController{
     	$validator = $this->container->get('rc.phpcr.file.validator');
 
     	if($validator->validateFile( array(urldecode($filename)) )){
-            
+
             $filename = $validator->getFilename();
     		$resolver = $this->container->get('rc.phpcr.resolver.service');
     		$txtname = $resolver->getName($filename);
