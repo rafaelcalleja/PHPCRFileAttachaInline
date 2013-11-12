@@ -44,7 +44,7 @@ class filevalidator {
     private function getRealPath($file){
 
         try{
-            
+
             $filename = pathinfo($file, PATHINFO_BASENAME) ;
             $directory = dirname($file) ;
 
@@ -59,7 +59,7 @@ class filevalidator {
 
             return $file;
 
-        }catch(Exception $e){
+        }catch(\Exception $e){
             return $file;
         }
     }
