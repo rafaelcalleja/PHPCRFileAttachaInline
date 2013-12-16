@@ -34,5 +34,16 @@ class renderInline{
     	return $response;
     }
 
+    public function render($response, $filepath ){
+
+        $response->headers->set('Cache-Control', 'private');
+        $response->headers->set('Content-type', mime_content_type($filepath) );
+        $response->headers->set('Content-length', filesize($filepath));
+        $response->sendHeaders();
+        readfile($filepath);
+
+        return $response;
+    }
+
 
 }

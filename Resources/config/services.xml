@@ -31,7 +31,7 @@
         <service id="rc.phpcr.file.validator" class="%rc.phpcr.file.validator.class%">
           <argument type="service" id="service_container" />
           <argument>%rc.phpcr.file.validator.options%</argument>
-          <argument>%rcphpcr_file_attach_inline.mimetypes%</argument>
+          <argument>%rcphpcr_file_attach_inline.ignore_files%</argument>
         </service>
         
         <service id="rc.phpcr.resolver.service" class="%rc.phpcr.resolver.class%">

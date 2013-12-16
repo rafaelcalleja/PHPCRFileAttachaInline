@@ -7,6 +7,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use RC\PHPCR\FileAttachInlineBundle\Event\FileErrorEvent;
 use RC\PHPCR\FileAttachInlineBundle\Event\FileInfoEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Config\FileLocator;
 use Symfony\Component\Finder\Finder;
 
@@ -36,12 +37,17 @@ class DownloadSubscriber implements EventSubscriberInterface {
             'fai.success.request' => array('postSuccesRequest', 0),
             'fai.failed.validation' => array('postFailedValidation', 0),
             'fai.failed.download'  => array('postFailedDownload', 0),
+            'fai.render.inline'  => array('postIgnoreFiles', 0),
         );
 
     }
 
     public function postSuccesRequest($args){
 
+    }
+
+    public function postIgnoreFiles(FileResponseEvent $event){
+        $event->setResponse(new Response());
     }
 
     /* TODO Solamente se va realizar un unico redirect, refactorizar queueRedirect */

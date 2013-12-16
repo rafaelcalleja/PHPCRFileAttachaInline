@@ -30,6 +30,7 @@ class RCPHPCRFileAttachInlineExtension extends Extension
         $container->setParameter('rcphpcr_file_attach_inline.extensions', $config['extensions']);
         $container->setParameter('rcphpcr_file_attach_inline.max_filesize', $config['max_filesize']);
         $container->setParameter('rcphpcr_file_attach_inline.preference', $config['preference']);
+        $container->setParameter('rcphpcr_file_attach_inline.ignore_files', $config['ignore_files']);
         foreach($config['providers'] as $key => $provider){
         	$container->setParameter("rcphpcr_file_attach_inline.providers.$key", $provider);
         }

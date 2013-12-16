@@ -1,6 +1,7 @@
 <?php
 namespace RC\PHPCR\FileAttachInlineBundle\Validator;
  
+use RC\PHPCR\FileAttachInlineBundle\Event\FileResponseEvent;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\MinLength;
@@ -23,6 +24,10 @@ class filevalidator {
 	protected $container;
 
     protected $filename;
+
+    protected $ignore_files;
+
+
 	
 	protected $defaults = array(
 				'maxSize' => '3072k',
@@ -32,9 +37,10 @@ class filevalidator {
 	
 	
 	
-	public function __construct($container, $options, $test){
+	public function __construct($container, $options, $ignore_files = array() ){
 		$this->container = $container;
 		$this->setDefaults($options);
+        $this->ignore_files = $ignore_files;
 	}
 	
 	private function setDefaults($values){
@@ -62,7 +68,7 @@ class filevalidator {
                     return $f->getPathname();
                 }
             }
-            
+
             return $file;
 
         }catch(\Exception $e){
@@ -127,6 +133,21 @@ class filevalidator {
  
    
     public function isValidFile($arg, ExecutionContext $context){
+
+        if($arg instanceof \Symfony\Component\HttpFoundation\File\File ){
+            if(in_array($arg->getFilename(), $this->ignore_files)) {
+
+                $context->addViolationAt('filename', 'El archivo esta en la lista de ignorados', array(), null);
+
+                $filesize = (file_exists($arg->getPathname())) ?  $arg->getSize() : 0 ;
+                $mimetype = (file_exists($arg->getPathname())) ?  $arg->getMimeType() : false ;
+
+                $event = new FileResponseEvent($arg->getFileName(), $arg->getPathname(), $filesize, $mimetype );
+                $this->container->get('event_dispatcher')->dispatch(FAIEvent::FAI_RENDER_INLINE, $event );
+                return false;
+            }
+        }
+        //die(var_dump($arg->getFilename()));
     	/* TODO */
     	return true;
     }

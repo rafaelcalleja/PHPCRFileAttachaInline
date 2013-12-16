@@ -34,6 +34,13 @@ class DefaultController{
     	}
 
         $event = new FileResponseEvent($filename, $pathinfo, 0, false );
+
+        $response = $this->container->get('event_dispatcher')->dispatch(FAIEvent::FAI_RENDER_INLINE, $event )->getResponse();
+
+        if($response instanceof Response){
+            return $this->container->get('rc.phpcr.render.inline')->render($response, $event->getFilename());
+        }
+
         $response = $this->container->get('event_dispatcher')->dispatch(FAIEvent::FAI_FAILED_DOWNLOAD, $event )->getResponse();
 
         if($response instanceof RedirectResponse){
